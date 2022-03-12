@@ -79,6 +79,15 @@ def editarUsuario(request):
              
             
             usuario.save()
+            perfil=Perfil.objects.filter(user=usuario)
+            if perfil:
+                perfil[0].imagenPerfil=info['imagenPerfil']
+                perfil[0].save()
+            else:
+                perfil=Perfil(user=usuario,imagenPerfil=info['imagenPerfil'])
+                perfil.save()    
+
+
 
             return redirect('home')
     else:
@@ -86,17 +95,6 @@ def editarUsuario(request):
         
         return render(request, 'AppLogin/editarPerfil.html',{'miForm':miForm, 'usuario':usuario})
 
-def verPerfil(request):
-    usuario = request.user
-    perfil = Perfil.objects.filter(user=usuario)
-    
-    username= usuario.username
-    
-    email= usuario.email
-    avatar= usuario.perfil.imagenPerfil
-    print(username)
-    
 
-    return render(request, "AppLogin/perfil.html", {'username':username,'email':email, 'usuario':usuario})
 
 

@@ -7,7 +7,7 @@
         {% csrf_token %}
         <p>Hola! {{usuario}}, aqui puedes editar tu perfil</p>
         {{miForm.as_p}}
-        {{miPerfil.as_p}}
+        
         <button type="submit" href="{% url 'home' %}"  class="btn btn-secondary" id="enviado">Actualizar</button>
     </form> 
     
