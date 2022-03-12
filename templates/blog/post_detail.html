@@ -5,18 +5,58 @@
   <div class="row">
     <div class="col-md-8 card mb-4  mt-3 left  top">
       <div class="card-body">
-        <h1>{% block title %} {{ object.titulo }} {% endblock title %}</h1>
+        <h1>{% block title %} {{ post.titulo }} {% endblock title %}</h1>
         <p class=" text-muted">{{ post.autor }} | {{ post.creado_el }}</p>
-        <p class="card-text ">{{ object.contenido | safe }}</p>
-        {% if user.is_authenticated and user.username == post.autor.username %}
+        <p class="card-text ">{{ post.contenido | safe }}</p>
+            {% if user.is_authenticated and user.username == post.autor.username %}
                 <a href="{% url 'modificarPost' post.slug %}" class="btn btn-secondary  btn-sm">Editar Post</a>
                 <a href="{% url 'eliminarPost' post.slug %}" class="btn btn-secondary  btn-sm">Eliminar</a>
-        {% endif %}    
-        
+            {% endif %}   
+
+    
+       
+            {% if user.is_authenticated %} 
+                <div class="col-md-8 card mb-4  mt-3 ">
+                    <div class="card-body">
+                    <!-- comments -->
+                    <h4>{{ comments.count }} Comentarios</h4>
+            
+                    {% for comment in comments %}
+                    <div class="comments" style="padding: 10px;">
+                        <p class="font-weight-bold">
+                        {{ comment.name }}
+                        <span class=" text-muted font-weight-normal">
+                            {{ comment.created_on }}
+                        </span>
+                        </p>
+                        {{ comment.comentario | linebreaks }}
+                    </div>
+                    {% endfor %}
+                    </div>
+                </div>
+                
+                    <div class="card-body">
+                    {% if new_comment %}
+                    <div class="alert alert-success" role="alert">
+                        Tu comentario está pendiente de aprobación 
+                        <a href= {% url 'home' %} class="btn btn-secondary  btn-sm">Volver al post</a>
+                    </div>
+                    {% else %}
+                    <h5>Dejanos un comentario</h5>
+                    <form method="post" class="post-form">
+                        {{ comment_form.as_p }}
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-secondary  btn-sm">Enviar</button>
+                        <a href= {% url 'home' %} class="btn btn-secondary  btn-sm">Volver al post</a>
+                    </form>
+                    {% endif %}
+                    </div>
+                </div>
+            {% else %} 
+            <a class="nav-link py-0 px-5 px-lg-1 rounded" href="{% url 'Login' %}">Logueate para ver comentarios</a>
+            {% endif %}
       </div>
     </div>
   </div>
 </div>
-
-<a class="btn btn-primary btn-l rounded-pill mt-15" href="{% url 'home' %}">Volver</a> </br>
 {% endblock ContenidoQueCambia %}
