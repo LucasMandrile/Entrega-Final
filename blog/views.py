@@ -41,7 +41,7 @@ class PostDelete(DeleteView):
 
 """vista basada en funciones, para modificar la vista detalles y que nos figuren los comentarios en la misma"""
 def post_detail(request, slug):
-    template_name = 'post_detail.html'
+    template_name = 'blog/post_detail.html'
     post = get_object_or_404(Post, slug=slug)
     comments = post.comments.filter(active=True)
     new_comment = None

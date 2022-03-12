@@ -32,7 +32,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
     name = models.CharField(max_length=80)
     email = models.EmailField()
-    body = models.TextField()
+    comentario = models.TextField()
     creado_el = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=False)
 
@@ -40,4 +40,4 @@ class Comment(models.Model):
         ordering = ['creado_el']
 
     def __str__(self):
-        return 'Comment {} by {}'.format(self.body, self.name)
+        return 'Comment {} by {}'.format(self.comentario, self.name)

@@ -18,9 +18,9 @@ admin.site.register(Post,PostAdmin)
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'body', 'post', 'active')
+    list_display = ('name', 'comentario', 'post', 'active')
     list_filter = ('active', 'creado_el')
-    search_fields = ('name', 'email', 'body')
+    search_fields = ('name', 'email', 'comentario')
     actions = ['approve_comments']
 
     def approve_comments(self, request, queryset):
