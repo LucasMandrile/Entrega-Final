@@ -34,7 +34,7 @@ class Comment(models.Model):
     email = models.EmailField()
     comentario = models.TextField()
     creado_el = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['creado_el']

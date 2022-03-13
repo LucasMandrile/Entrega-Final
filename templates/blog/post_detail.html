@@ -1,6 +1,7 @@
 {% extends 'blog/base.html' %}
 {% block ContenidoQueCambia %}
 
+
 <div class="container">
   <div class="row">
     <div class="col-md-8 card mb-4  mt-3 left  top">
@@ -16,15 +17,16 @@
     
        
             {% if user.is_authenticated %} 
-                <div class="col-md-8 card mb-4  mt-3 ">
+                
                     <div class="card-body">
                     <!-- comments -->
                     <h4>{{ comments.count }} Comentarios</h4>
             
                     {% for comment in comments %}
-                    <div class="comments" style="padding: 10px;">
+                    <div class="col-md 14 card mb-10  mt-4 ">
+                    <class="comments" style="padding: 5px;">
                         <p class="font-weight-bold">
-                        {{ comment.name }}
+                            <h6>{{ comment.name }}</h6>
                         <span class=" text-muted font-weight-normal">
                             {{ comment.created_on }}
                         </span>
@@ -36,20 +38,19 @@
                 </div>
                 
                     <div class="card-body">
-                    {% if new_comment %}
-                    <div class="alert alert-success" role="alert">
-                        Tu comentario está pendiente de aprobación 
-                        <a href= {% url 'home' %} class="btn btn-secondary  btn-sm">Volver al post</a>
+                    
                     </div>
-                    {% else %}
+                    
                     <h5>Dejanos un comentario</h5>
-                    <form method="post" class="post-form">
-                        {{ comment_form.as_p }}
-                        {% csrf_token %}
+                    {% load crispy_forms_tags %}
+                    <form method="post" class="post-form"style="margin-top: 1.3em;">
+                        {{ comment_form | crispy }}
+                        {% csrf_token %}<br>
+                        
                         <button type="submit" class="btn btn-secondary  btn-sm">Enviar</button>
                         <a href= {% url 'home' %} class="btn btn-secondary  btn-sm">Volver al post</a>
                     </form>
-                    {% endif %}
+                    
                     </div>
                 </div>
             {% else %} 
