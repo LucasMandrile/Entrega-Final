@@ -2,13 +2,14 @@
 {%load static%}
 {% block ContenidoQueCambia %}
     <h2>Editar perfil</h2>
-    <form action="" method="POST" >
+    <form method="POST" enctype ="multipart/from-data">
 
         {% csrf_token %}
         <p>Hola! {{usuario}}, aqui puedes editar tu perfil</p>
-        {{miForm.as_p}}
+        {{userForm.as_p}}
+        {{imageForm.as_p}}
         
-        <button type="submit" href="{% url 'home' %}"  class="btn btn-secondary" id="enviado">Actualizar</button>
+        <button type="submit" class="btn btn-secondary" id="enviado">Actualizar</button>
     </form> 
     
 <div class="modal fade" id="usercreado" role="dialog">

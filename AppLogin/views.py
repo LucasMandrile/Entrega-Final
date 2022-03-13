@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 
 
-from .forms import  UserEditionForm, UserRegisterForm, Perfil
+from .forms import  *
 from django.contrib.auth.models import User
 import django
 
@@ -64,36 +64,37 @@ def register(request):
 
 def editarUsuario(request):
     usuario = request.user
-    
+    if not usuario.is_authenticated:
+        return redirect('home')
+    perfil = request.user.perfil
+
     if request.method == 'POST':
-        miForm = UserEditionForm(request.POST)
-        
-        if miForm.is_valid():
-            info= miForm.cleaned_data
+        userForm = UserRegisterForm(request.POST,instance = usuario)
+        imageForm=UserImageForm(request.POST,request.FILES, instance=perfil)
+
+        if userForm.is_valid() and imageForm.is_valid():
+            infoUser= userForm.cleaned_data
+            infoImage= imageForm.cleaned_data
             
-            usuario.email = info['email']
-            usuario.first_name= info['first_name']
-            usuario.last_name= info['last_name']
-            new_password = info['password1']
+            usuario.email = infoUser['email']
+            usuario.first_name= infoUser['first_name']
+            usuario.last_name= infoUser['last_name']
+            new_password = infoUser['password1']
             usuario.set_password(new_password)
              
             
+            perfil.imagenPerfil= infoImage['imagenPerfil']
+
             usuario.save()
-            perfil=Perfil.objects.filter(user=usuario)
-            if perfil:
-                perfil[0].imagenPerfil=info['imagenPerfil']
-                perfil[0].save()
-            else:
-                perfil=Perfil(user=usuario,imagenPerfil=info['imagenPerfil'])
-                perfil.save()    
 
-
+            perfil.save()    
 
             return redirect('home')
     else:
-        miForm = UserEditionForm(initial={'email': usuario.email,'first_name':usuario.first_name ,'last_name': usuario.last_name,'password':usuario.password})
         
-        return render(request, 'AppLogin/editarPerfil.html',{'miForm':miForm, 'usuario':usuario})
+        userForm = UserRegisterForm(initial={'email': usuario.email,'first_name':usuario.first_name ,'last_name': usuario.last_name})
+        imageForm = UserImageForm()
+    return render(request, 'AppLogin/editarPerfil.html',{'userForm':userForm,'imageForm':imageForm , 'usuario':usuario})
 
 
 

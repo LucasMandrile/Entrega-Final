@@ -16,6 +16,8 @@
 </style>
 <body>
     <div class="container">
+        <!--Solicita que estes logueado y seas administrador para poder postear-->
+        {% if request.user.is_authenticated and user.is_staff == 1%}
         <h2>Escribe tu Post!</h2>
         <form method="POST">
             {% csrf_token %}
@@ -23,6 +25,12 @@
             {{ form.as_p }}
             
             <button type="submit" class="btn btn-secondary">Postear</button>
+            {% else %}
+            <br>
+            <br>
+            <h3>Los posteos solo los puede realizar un administrador</h3>
+            <a href= {% url 'home' %} class="btn btn-secondary  btn-sm">Volver al listado de post</a>
+        {% endif %}   
         </form>
     </div> 
 </body>
