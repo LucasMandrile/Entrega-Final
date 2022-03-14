@@ -17,7 +17,7 @@
 
     
        
-            {% if user.is_authenticated %} 
+            
                 
                     <div class="card-body">
                     <!-- comments -->
@@ -28,12 +28,13 @@
                     <class="comments" style="padding: 5px;">
                         <p class="font-weight-bold">
                             <h6>{{ comment.name }}</h6>
-                            <img class="rounded-circle" src= "{{request.user.perfil.imagenPerfil.url}}" alt="..."  height="40px" width="40px" />
+                            
                         <span class=" text-muted font-weight-normal">
                             {{ comment.creado_el }}
                         </span>
                         </p>
                         {{ comment.comentario | linebreaks }}
+                        
                     </div>
                     {% endfor %}
                     </div>
@@ -42,7 +43,7 @@
                     <div class="card-body">
                     
                     </div>
-                    
+            {% if user.is_authenticated %}         
                     <h5>Dejanos un comentario</h5>
                     {% load crispy_forms_tags %}
                     <form method="post" class="post-form"style="margin-top: 1.3em;">
@@ -56,7 +57,7 @@
                     </div>
                 </div>
             {% else %} 
-            <a class="nav-link py-0 px-5 px-lg-1 rounded" href="{% url 'Login' %}">Logueate para ver comentarios</a>
+            <a class="nav-link py-0 px-5 px-lg-1 rounded" href="{% url 'Login' %}">Logueate y dejanos tus comentarios o sugerencias.</a>
             {% endif %}
       </div>
     </div>

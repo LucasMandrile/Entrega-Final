@@ -119,3 +119,9 @@ def verComentarios(request):
     comentario= Comment.objects.filter(name=request.user)
    
     return render(request,"Applogin/comentarios.html", {'comentario':comentario})
+
+def eliminarComentario(request, id_comentario):
+    comentario= Comment.objects.get(id=id_comentario)
+    comentario.delete()
+    comentarioTodos= Comment.objects.filter(name=request.user) 
+    return render(request, 'Applogin/comentarios.html', {'comentario':comentarioTodos})

@@ -14,6 +14,7 @@
                         <div class="text-muted fst-italic mb-2">{{coment.creado_el}}</div>
                         <p>Comentaste: </p>
                         <p>{{coment.comentario}}</p>
+                        <a class="btn btn-secondary" href="{% url 'eliminarComentario' coment.id %}">Eliminar</a>
                         
 
                         {% endfor %}

@@ -11,5 +11,6 @@ urlpatterns = [
     path('editarPerfil/', editarUsuario, name='editarPerfil'),
     path('perfil/', verPerfil, name='Perfil'),
     path('comentarios/',verComentarios, name='comentarios'),
+    path('eliminarComentario/<id_comentario>',eliminarComentario, name="eliminarComentario"),
 ]
 
