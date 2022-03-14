@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block ContenidoQueCambia %}
+
+
+</head>
+
+                        {% if comentario %}
+
+                        {% for coment in comentario %}
+                        <h3>Comentarios del post: <a href="{% url 'home'%}">{{coment.post.titulo}}</a></h3>
+                        <div class="text-muted fst-italic mb-2">Publicado por ti: {{coment.name}}</div>
+                        <div class="text-muted fst-italic mb-2">{{coment.creado_el}}</div>
+                        <p>Comentaste: </p>
+                        <p>{{coment.comentario}}</p>
+                        
+
+                        {% endfor %}
+
+                        {% else %}
+                        <p>No hay nada:(</p>
+                        {% endif %}
+
+
+
+
+
+{% endblock ContenidoQueCambia %}

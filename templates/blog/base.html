@@ -28,10 +28,10 @@
                         <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Blog</a></li>
                         {% if not request.user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'Login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'Login' %}">Iniciar Sesion</a></li>
                         {%else%}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'editarPerfil' %}">{{user.username}}</a></li>
-                        <img style="height: 50px;" src="{{user.imagen.url}}">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Perfil' %}">{{user.username}}</a></li>
+                        <img class="rounded-circle" src= "{{request.user.perfil.imagenPerfil.url}}" alt="..."  height="40px" width="40px" />
                         <li class="nav-item"><a class="nav-link" href="{% url 'Logout' %}">Cerrar Sesion</a></li>
                         {%endif%}
                     </ul>

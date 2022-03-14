@@ -1,6 +1,9 @@
+from xml.etree.ElementTree import Comment
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
+
+from blog.models import Post, Comment
 
 
 from .forms import  *
@@ -96,6 +99,23 @@ def editarUsuario(request):
         imageForm = UserImageForm()
     return render(request, 'AppLogin/editarPerfil.html',{'userForm':userForm,'imageForm':imageForm , 'usuario':usuario})
 
+def verPerfil(request):
+    usuario = request.user
+    perfil = Perfil.objects.filter(user=usuario)
+    comentarios= Comment.objects.filter(name=usuario)
 
+    username= usuario.username
+    #userBio= usuario.perfil.biografia
+    email= usuario.email
+    avatar= usuario.perfil.imagenPerfil
+    print(username)
+    print(comentarios)
 
+    return render(request, "AppLogin/perfil.html", {'username':username,'email':email, 'usuario':usuario,'comentario':comentarios})
 
+"""Para ver los comentarios"""                                           
+
+def verComentarios(request):
+    comentario= Comment.objects.filter(name=request.user)
+   
+    return render(request,"Applogin/comentarios.html", {'comentario':comentario})

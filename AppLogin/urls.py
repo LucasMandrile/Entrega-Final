@@ -8,6 +8,8 @@ urlpatterns = [
     path('login/', login_request, name='Login'),
     path('logout/', LogoutView.as_view(template_name='AppLogin/logout.html'), name='Logout'),
     path('register/', register, name='Register'),
-    path('editarPerfil/', editarUsuario, name="editarPerfil"),
+    path('editarPerfil/', editarUsuario, name='editarPerfil'),
+    path('perfil/', verPerfil, name='Perfil'),
+    path('comentarios/',verComentarios, name='comentarios'),
 ]
 

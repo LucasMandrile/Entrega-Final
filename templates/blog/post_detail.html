@@ -27,8 +27,9 @@
                     <class="comments" style="padding: 5px;">
                         <p class="font-weight-bold">
                             <h6>{{ comment.name }}</h6>
+                            <img class="rounded-circle" src= "{{request.user.perfil.imagenPerfil.url}}" alt="..."  height="40px" width="40px" />
                         <span class=" text-muted font-weight-normal">
-                            {{ comment.created_on }}
+                            {{ comment.creado_el }}
                         </span>
                         </p>
                         {{ comment.comentario | linebreaks }}

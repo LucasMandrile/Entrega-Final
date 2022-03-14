@@ -10,4 +10,5 @@ urlpatterns = [
     path('post/create', PostCreate.as_view(), name='crearPost'),
     path('post/update/<slug:slug>/', PostUpdate.as_view(), name='modificarPost'),
     path('post/delete/<slug:slug>/', PostDelete.as_view(), name='eliminarPost'),
-]
+    #path('comentarios',verComentarios, name='comentarios'),
+    ]

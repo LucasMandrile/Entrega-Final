@@ -30,5 +30,5 @@ class PerfilForm(forms.ModelForm):
     imagenPerfil= forms.ImageField(required=False, widget=forms.FileInput)
     class Meta:
         model = Perfil
-        fields = ['imagenPerfil']
+        fields = ['imagenPerfil',]
         

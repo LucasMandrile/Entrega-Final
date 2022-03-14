@@ -65,3 +65,11 @@ def post_detail(request, slug):
                                            'new_comment': new_comment,
                                            'comment_form': comment_form})
 
+#"""Para ver los comentarios"""                                           
+
+#def verComentarios(request):
+#    comentario= Comment.objects.filter(name=request.user)
+   
+#    return render(request,"blog/comentarios.html", {'comentario':comentario})
+
+
