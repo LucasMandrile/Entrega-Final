@@ -9,6 +9,9 @@ from .forms import CommentForm
 from django.shortcuts import render, get_object_or_404
 # Create your views here.
 
+def inicio(request):
+    return render(request, 'blog/inicio.html')
+
 """vista para listar post"""
 class PostList(ListView):
     model = Post

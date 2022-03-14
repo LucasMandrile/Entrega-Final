@@ -2,7 +2,8 @@ from django.urls import path
 from blog.views import *
 
 urlpatterns = [
-    path('', PostList.as_view(), name='home'),
+    path('inicio/', inicio, name='Inicio'),
+    path('post_list', PostList.as_view(), name='home'),
     #la expresion <slug:slug> captura los valores de la URL y devolver la página de detalles de la publicación equivalente
     #path('<slug:slug>/', PostDetail.as_view(), name='post_detail'),
     #reenplazo la vista de detalles por la funcion post_detail
