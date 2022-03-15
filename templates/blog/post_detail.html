@@ -1,5 +1,7 @@
 {% extends 'blog/base.html' %}
+{% load static %}
 {% block ContenidoQueCambia %}
+
 
 <div class="container">
   <div class="row">
@@ -7,6 +9,7 @@
       <div class="card-body">
         <h1>{% block title %} {{ post.titulo }} {% endblock title %}</h1>
         <p class=" text-muted">{{ post.autor }} | {{ post.creado_el }}</p>
+        <img class="img-fluid rounded" src= "{{post.imagenPost.url}}" alt="..."  height="120px" width="700px" />
         <p class="card-text ">{{ post.contenido | safe }}</p>
             {% if user.is_authenticated and user.username == post.autor.username %}
                 <a href="{% url 'modificarPost' post.slug %}" class="btn btn-secondary  btn-sm">Editar Post</a>
@@ -15,45 +18,47 @@
 
     
        
-            {% if user.is_authenticated %} 
-                <div class="col-md-8 card mb-4  mt-3 ">
+            
+                
                     <div class="card-body">
                     <!-- comments -->
-                    <h4>{{ comments.count }} Comentarios</h4>
+                    <h4> {{ comments.count }} Comentarios</h4>
             
                     {% for comment in comments %}
-                    <div class="comments" style="padding: 10px;">
+                    <div class="col-md 14 card mb-10  mt-4 ">
+                    <class="comments" style="padding: 5px;">
                         <p class="font-weight-bold">
-                        {{ comment.name }}
+                            <h6>{{ comment.name }}</h6>
+                            
                         <span class=" text-muted font-weight-normal">
-                            {{ comment.created_on }}
+                            {{ comment.creado_el }}
                         </span>
                         </p>
                         {{ comment.comentario | linebreaks }}
+                        
                     </div>
                     {% endfor %}
                     </div>
                 </div>
                 
                     <div class="card-body">
-                    {% if new_comment %}
-                    <div class="alert alert-success" role="alert">
-                        Tu comentario está pendiente de aprobación 
-                        <a href= {% url 'home' %} class="btn btn-secondary  btn-sm">Volver al post</a>
+                    
                     </div>
-                    {% else %}
-                    <h5>Dejanos un comentario</h5>
-                    <form method="post" class="post-form">
-                        {{ comment_form.as_p }}
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-secondary  btn-sm">Enviar</button>
+            {% if user.is_authenticated %}         
+                    <h4>Dejanos un comentario</h4>
+                    {% load crispy_forms_tags %}
+                    <form method="post" class="post-form"style="margin-top: 1.3em;">
+                        {{ comment_form | crispy }}
+                        {% csrf_token %}<br>
+                        
+                        <button type="submit" class="btn btn-secondary  btn-sm">Enviar comentario</button>
                         <a href= {% url 'home' %} class="btn btn-secondary  btn-sm">Volver al post</a>
                     </form>
-                    {% endif %}
+                    
                     </div>
                 </div>
             {% else %} 
-            <a class="nav-link py-0 px-5 px-lg-1 rounded" href="{% url 'Login' %}">Logueate para ver comentarios</a>
+            <a class="nav-link py-0 px-5 px-lg-1 rounded" href="{% url 'Login' %}">Logueate y dejanos tus comentarios o sugerencias.</a>
             {% endif %}
       </div>
     </div>

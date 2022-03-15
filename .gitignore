@@ -1,0 +1,9 @@
+/migrations
+
+*.pyc
+
+/media
+
+/static/root
+
+/env

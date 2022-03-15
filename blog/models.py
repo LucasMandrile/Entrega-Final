@@ -6,6 +6,12 @@ from ckeditor.fields import RichTextField
 
 # Lucas: Modelo para crear un blog
 
+class Categoria(models.Model):
+    nombre=models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.nombre}'
+
 STATUS = (
     (0,"Draft"),
     (1,"Publish")
@@ -19,7 +25,8 @@ class Post(models.Model):
     contenido = RichTextUploadingField()
     creado_el = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
-    
+    imagenPost= models.ImageField(null=True, default = 'PorDefecto/profileImageDefault.jpg', upload_to = 'imagenes', max_length = 255)
+    categoria= models.ManyToManyField(Categoria)
 
     class Meta:
         ordering = ['-creado_el']
@@ -30,14 +37,15 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
-    name = models.CharField(max_length=80)
-    email = models.EmailField()
+    name = models.ForeignKey(User,on_delete=models.CASCADE,related_name='usuario')
     comentario = models.TextField()
     creado_el = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['creado_el']
 
     def __str__(self):
         return 'Comment {} by {}'.format(self.comentario, self.name)
+
+

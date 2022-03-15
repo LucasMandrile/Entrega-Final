@@ -5,32 +5,15 @@
 
 {% block ContenidoQueCambia %}
 <style>
-    body {
-        font-family: "Roboto", sans-serif;
-        font-size: 18px;
-        background-color: #fdfdfd;
-    }
 
-    .head_text {
-        color: white;
-    }
-
-    .card {
-        box-shadow: 0 16px 48px #E3E7EB;
-    }
 </style>
 
-<header class="masthead">
-    <div class="overlay"></div>
+<header class="py-2 bg-info border-bottom mb-4" >
     <div class="container">
-        <div class="row">
-            <div class=" col-md-8 col-md-10 mx-auto">
-                <div class="site-heading">
-                    <h3 class=" site-heading my-4 mt-3 text-black"> Bienvenidos a nuestros Blog!! </h3>
-                    <p class="text-black">Queremos compartir con ustedes nuestras experiencias en la cocina..
-                    </p>
-                </div>
-            </div>
+        <!--<img src="static/blog/assets/img/home-bg.jpg">-->
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">Nuestras mejores recetas las compartimos con vos..</h1>
+            <p class="lead mb-0">Encontra las mas ricas recetas y animate!!!</p>
         </div>
     </div>
 </header>
@@ -38,17 +21,30 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8 mt-3 left">
+        
+            {% if post_list.count == 0 %} 
+                <h3>No hay ningun Post</h3>
+            {% endif %}    
+            
+            {% if request.user.is_authenticated and user.is_staff == 1%}
+                    <a class="btn btn-secondary  btn-sm" href="{% url 'crearPost'%}">Crear nuevo Post</a>
+                    <br>
+                    <br>
+            {% endif %}
+                
+                
+
             {% for post in post_list %}
             <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="card-title">{{ post.titulo }}</h2>
                     <p class="card-text text-muted h6">{{ post.autor }} | {{ post.creado_el}} </p>
-                    <p class="card-text">{{post.ontenido|slice:":200" }}</p>
-                    
-                    <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Read More &rarr;</a>
+                    <p class="card-text">{{post.contenido|slice:":200"|safe}}...</p>
+                    <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Leer m &rarr;</a>
                 </div>
             </div>
             {% endfor %}
+        
         </div>
         
     </div>

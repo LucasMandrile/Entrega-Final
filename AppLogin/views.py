@@ -1,9 +1,12 @@
+from xml.etree.ElementTree import Comment
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 
+from blog.models import Post, Comment
 
-from .forms import  UserEditionForm, UserRegisterForm, Perfil
+
+from .forms import  *
 from django.contrib.auth.models import User
 import django
 
@@ -53,7 +56,9 @@ def register(request):
                 user_new = None
 
             if not user_new:
-                form.save()
+                usuario=form.save()
+                perfil=Perfil(user=usuario)
+                perfil.save()
 
             return redirect('Login')
 
@@ -64,39 +69,64 @@ def register(request):
 
 def editarUsuario(request):
     usuario = request.user
-    
+    if not usuario.is_authenticated:
+        return redirect('home')
+    perfil = request.user.perfil
+
     if request.method == 'POST':
-        miForm = UserEditionForm(request.POST)
         
-        if miForm.is_valid():
+        miForm = UserEditForm(request.POST, instance = usuario)
+        miPerfil= PerfilForm(request.POST, request.FILES, instance=perfil)
+
+        
+        if miForm.is_valid() and miPerfil.is_valid():
+
+            
             info= miForm.cleaned_data
+            perfil1 = miPerfil.cleaned_data
             
             usuario.email = info['email']
             usuario.first_name= info['first_name']
             usuario.last_name= info['last_name']
             new_password = info['password1']
             usuario.set_password(new_password)
-             
+            perfil.imagenPerfil= perfil1['imagenPerfil'] 
             
+            
+
             usuario.save()
+            miPerfil.save()
+               
 
             return redirect('home')
     else:
-        miForm = UserEditionForm(initial={'email': usuario.email,'first_name':usuario.first_name ,'last_name': usuario.last_name,'password':usuario.password})
+        miForm = UserEditForm(initial={'email': usuario.email,'first_name':usuario.first_name ,'last_name': usuario.last_name,'password':usuario.password})
+        miPerfil = PerfilForm(instance=perfil)
+        return render(request, 'AppLogin/editarPerfil.html',{'miForm':miForm, 'miPerfil': miPerfil,'usuario':usuario})
         
-        return render(request, 'AppLogin/editarPerfil.html',{'miForm':miForm, 'usuario':usuario})
-
 def verPerfil(request):
     usuario = request.user
     perfil = Perfil.objects.filter(user=usuario)
-    
+    comentarios= Comment.objects.filter(name=usuario)
+
     username= usuario.username
     
     email= usuario.email
     avatar= usuario.perfil.imagenPerfil
     print(username)
-    
+    print(comentarios)
 
-    return render(request, "AppLogin/perfil.html", {'username':username,'email':email, 'usuario':usuario})
+    return render(request, "AppLogin/perfil.html", {'username':username,'email':email, 'usuario':usuario,'comentario':comentarios})
 
+"""Para ver los comentarios"""                                           
 
+def verComentarios(request):
+    comentario= Comment.objects.filter(name=request.user)
+   
+    return render(request,"Applogin/comentarios.html", {'comentario':comentario})
+
+def eliminarComentario(request, id_comentario):
+    comentario= Comment.objects.get(id=id_comentario)
+    comentario.delete()
+    comentarioTodos= Comment.objects.filter(name=request.user) 
+    return render(request, 'Applogin/comentarios.html', {'comentario':comentarioTodos})

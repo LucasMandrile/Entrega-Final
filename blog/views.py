@@ -9,6 +9,14 @@ from .forms import CommentForm
 from django.shortcuts import render, get_object_or_404
 # Create your views here.
 
+def inicio(request):
+    return render(request, 'blog/inicio.html')
+
+def quien_soy(request):
+    return render(request, 'blog/quienSoy.html')
+
+
+
 """vista para listar post"""
 class PostList(ListView):
     model = Post
@@ -23,19 +31,19 @@ class PostDetail(DetailView):
 """"vista para crear post"""
 class PostCreate(CreateView):
     model = Post
-    success_url = "/blog"
-    fields = ['titulo','autor','status','contenido','slug']
+    success_url = "/blog/post_list"
+    fields = ['titulo','categoria','status','contenido','imagenPost','slug','autor',]
 
 """vista para modificar post"""
 class PostUpdate(UpdateView):
     model = Post
-    success_url = "/blog"
-    fields = ['titulo','status','contenido']
+    success_url = "/blog/post_list"
+    fields = ['titulo','categoria','status','contenido','imagenPost']
 
 """vista para eliminar un post"""
 class PostDelete(DeleteView):
     model = Post
-    success_url = "/blog"
+    success_url = "/blog/post_list"
 
 
 
@@ -54,6 +62,7 @@ def post_detail(request, slug):
             new_comment = comment_form.save(commit=False)
             # Assign the current post to the comment
             new_comment.post = post
+            new_comment.name = request.user
             # Save the comment to the database
             new_comment.save()
     else:
@@ -63,3 +72,12 @@ def post_detail(request, slug):
                                            'comments': comments,
                                            'new_comment': new_comment,
                                            'comment_form': comment_form})
+
+#"""Para ver los comentarios"""                                           
+
+#def verComentarios(request):
+#    comentario= Comment.objects.filter(name=request.user)
+   
+#    return render(request,"blog/comentarios.html", {'comentario':comentario})
+
+

@@ -18,14 +18,16 @@
 
             <form action="" method="POST">
                 {% csrf_token %}
-                {{form.as_p}}
+                {{form.as_p}}</br>
 
                 <a href="{% url 'home' %}"> <button type="submit" class="btn btn-secondary" >Iniciar sesión</button> </a>
             </form>
             {% else %}
             {% endif %}
+            </br>
             <h3>¿No estas registrado?</h3>
-            <a class="navbar-brand" href="{% url 'Register' %}">Registrate!</a>
+            </br>
+            <a class="btn btn-primary" href="{% url 'Register' %}">Registrate!</a>
         {% endif %}
     
 

@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block ContenidoQueCambia %}
+<header class="py-2 bg-info border-bottom mb-4" >
+    <div class="container">
+        <!--<img src="static/blog/assets/img/home-bg.jpg">-->
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">Hola, soy Lurvas y quiero contarte un poco de mi..</h1>
+            
+        </div>
+    </div>
+</header>
+
+
+
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-lg-6">
+                <div class="p-5" ><img class="img-fluid rounded"  src={% static "blog/assets/img/cocinero.jpg" %} height="120px" width="700px alt="..."  /></div>
+            </div>
+            <div class="col-lg-6">
+                <div class="p5">
+                    <h4lass="display-4"><b>Mi nombre es Lucas Mandrile, soy de un pueblito llamado Suardi, en el interior de Santa Fe. </b></h4>
+                    <p>Soy Contador Publico y amo los deportes y por supuesto cocinar! Es por ello que hoy estoy aca compartiendo todo aquello que tanto me gusta, mis experiencias y mis "experimentos.
+                        Espero que puedan disfrutar de mis recetas tanto como las disfruto yo!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock ContenidoQueCambia %}
+

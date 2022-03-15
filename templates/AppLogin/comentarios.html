@@ -1,0 +1,41 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block ContenidoQueCambia %}
+
+<header class="py-2 bg-info border-bottom mb-4" >
+    <div class="container">
+        <!--<img src="static/blog/assets/img/home-bg.jpg">-->
+        <div class="text-center my-0">
+            <h1 class="fw-bolder">Este es el listado de tus comentarios realizados</h1>
+            
+        </div>
+    </div>
+</header>
+</head>
+        <div class="col-md 14 card mb-10  mt-4 ">
+            <class="comments" style="padding: 5px;">
+                <p class="font-weight-bold">
+                        {% if comentario %}
+
+                        {% for coment in comentario %}
+                        <h3>Comentarios del post: <a href="{% url 'home'%}">{{coment.post.titulo}}</a></h3>
+                        <div class="text-muted fst-italic mb-2">Publicado por ti: {{coment.name}}</div>
+                        <div class="text-muted fst-italic mb-2">{{coment.creado_el}}</div>
+                        <p>Comentaste: </p>
+                        <p>{{coment.comentario}}</p>
+                        <a class="btn btn-secondary btn-sm" href="{% url 'eliminarComentario' coment.id %}">Eliminar</a>
+
+                        <a href="{% url 'comentarios' %}" class="btn btn-secondary  btn-sm">Mis Comentarios</a>
+        </div>
+                        {% endfor %}
+       
+                        {% else %}
+                        <h3><p>No has realizado ningun comentario..</p></h3>
+                        {% endif %}
+           
+
+
+
+
+{% endblock ContenidoQueCambia %}

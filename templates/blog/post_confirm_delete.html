@@ -1,12 +1,14 @@
 {% extends 'blog/base.html' %}
+{% load static %}
 {% block ContenidoQueCambia %}
+
 
 
         <form method="post">{% csrf_token %}
             <br>
-            Estas seguro de eliminar el Post {{ object.titulo }}?<br>
+            <h3>Estas seguro de eliminar el Post {{ object.titulo }}?</h3><br>
             <br>
-            <input type="submit" class="btn btn-primary btn-l rounded-pill mt-15" value="Si, deseo eliminar">
+            <input type="submit" class="btn btn-secondary  btn-md rounded-pill mt-15" value="Si, deseo eliminar">
             <a class="btn btn-primary btn-l rounded-pill mt-15" href="{% url 'home' %}">Cancelar</a>
         </form>
 
