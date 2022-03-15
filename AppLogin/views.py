@@ -56,7 +56,9 @@ def register(request):
                 user_new = None
 
             if not user_new:
-                form.save()
+                usuario=form.save()
+                perfil=Perfil(user=usuario)
+                perfil.save()
 
             return redirect('Login')
 
@@ -72,32 +74,43 @@ def editarUsuario(request):
     perfil = request.user.perfil
 
     if request.method == 'POST':
-        userForm = UserRegisterForm(request.POST,instance = usuario)
-        imageForm=UserImageForm(request.POST,request.FILES, instance=perfil)
+        #imageForm=UserImageForm(request.POST,request.FILES, instance=perfil)
+        miForm = UserEditForm(request.POST, instance = usuario)
+        miPerfil= PerfilForm(request.POST, request.FILES, instance=perfil)
 
-        if userForm.is_valid() and imageForm.is_valid():
-            infoUser= userForm.cleaned_data
-            infoImage= imageForm.cleaned_data
-            
-            usuario.email = infoUser['email']
-            usuario.first_name= infoUser['first_name']
-            usuario.last_name= infoUser['last_name']
-            new_password = infoUser['password1']
+        #if userForm.is_valid() and imageForm.is_valid():
+        if miForm.is_valid() and miPerfil.is_valid():
+
+            #infoUser= userForm.cleaned_data
+            #infoImage= imageForm.cleaned_data
+            info= miForm.cleaned_data
+            perfil1 = miPerfil.cleaned_data
+            #usuario.email = infoUser['email']
+            #usuario.first_name= infoUser['first_name']
+            #usuario.last_name= infoUser['last_name']
+            #new_password = infoUser['password1']
+            #usuario.set_password(new_password)
+            usuario.email = info['email']
+            usuario.first_name= info['first_name']
+            usuario.last_name= info['last_name']
+            new_password = info['password1']
             usuario.set_password(new_password)
-             
+            perfil.imagenPerfil= perfil1['imagenPerfil'] 
             
-            perfil.imagenPerfil= infoImage['imagenPerfil']
+            #perfil.imagenPerfil= infoImage['imagenPerfil']
 
             usuario.save()
-
-            perfil.save()    
+            miPerfil.save()
+            #perfil.save()    
 
             return redirect('home')
     else:
-        
-        userForm = UserRegisterForm(initial={'email': usuario.email,'first_name':usuario.first_name ,'last_name': usuario.last_name})
-        imageForm = UserImageForm()
-    return render(request, 'AppLogin/editarPerfil.html',{'userForm':userForm,'imageForm':imageForm , 'usuario':usuario})
+        miForm = UserEditForm(initial={'email': usuario.email,'first_name':usuario.first_name ,'last_name': usuario.last_name,'password':usuario.password})
+        miPerfil = PerfilForm(instance=perfil)
+        return render(request, 'AppLogin/editarPerfil.html',{'miForm':miForm, 'miPerfil': miPerfil,'usuario':usuario})
+        #userForm = UserRegisterForm(initial={'email': usuario.email,'first_name':usuario.first_name ,'last_name': usuario.last_name})
+        #imageForm = UserImageForm()
+    #return render(request, 'AppLogin/editarPerfil.html',{'userForm':userForm,'imageForm':imageForm , 'usuario':usuario})
 
 def verPerfil(request):
     usuario = request.user

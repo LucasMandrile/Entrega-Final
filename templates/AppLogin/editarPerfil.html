@@ -2,12 +2,12 @@
 {%load static%}
 {% block ContenidoQueCambia %}
     <h2>Editar perfil</h2>
-    <form method="POST" enctype ="multipart/from-data">
+    <form action="" method="POST" enctype="multipart/form-data">
 
         {% csrf_token %}
         <p>Hola! {{usuario}}, aqui puedes editar tu perfil</p>
-        {{userForm.as_p}}
-        {{imageForm.as_p}}
+        {{miForm.as_p}}
+        {{miPerfil.as_p}}
         
         <button type="submit" class="btn btn-secondary" id="enviado">Actualizar</button>
     </form> 

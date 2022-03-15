@@ -26,19 +26,19 @@ class PostDetail(DetailView):
 """"vista para crear post"""
 class PostCreate(CreateView):
     model = Post
-    success_url = "/blog"
+    success_url = "/blog/post_list"
     fields = ['titulo','autor','status','contenido','slug']
 
 """vista para modificar post"""
 class PostUpdate(UpdateView):
     model = Post
-    success_url = "/blog"
+    success_url = "/blog/post_list"
     fields = ['titulo','status','contenido']
 
 """vista para eliminar un post"""
 class PostDelete(DeleteView):
     model = Post
-    success_url = "/blog"
+    success_url = "/blog/post_list"
 
 
 
